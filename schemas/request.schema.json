@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://otpap.example/schemas/request.schema.json",
+  "$comment": "OTPAP request envelope schema used by the examples and test vectors.",
+  "title": "OTPAP Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["token", "body", "context"],
+  "properties": {
+    "token": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ProtocolVersion",
+        "ApplicationId",
+        "SessionId",
+        "UserId",
+        "PageId",
+        "ApiId",
+        "HttpMethod",
+        "Nonce",
+        "SequenceNumber",
+        "Timestamp",
+        "Expiration",
+        "BodyHash",
+        "Signature"
+      ],
+      "properties": {
+        "ProtocolVersion": { "type": "string" },
+        "ApplicationId": { "type": "string" },
+        "SessionId": { "type": "string" },
+        "UserId": { "type": "string" },
+        "PageId": { "type": "string" },
+        "ApiId": { "type": "string" },
+        "HttpMethod": { "type": "string" },
+        "Nonce": { "type": "string" },
+        "SequenceNumber": { "type": "integer" },
+        "Timestamp": { "type": "integer" },
+        "Expiration": { "type": "integer" },
+        "BodyHash": { "type": "string" },
+        "Signature": { "type": "string" }
+      }
+    },
+    "body": {
+      "type": "string"
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applicationId", "sessionId", "userId", "pageId", "apiId", "httpMethod"],
+      "properties": {
+        "applicationId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "pageId": { "type": "string" },
+        "apiId": { "type": "string" },
+        "httpMethod": { "type": "string" }
+      }
+    }
+  }
+}

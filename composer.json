@@ -1,0 +1,17 @@
+{
+  "name": "otpap/otpap",
+  "description": "OTPAP v2 reference implementation and protocol draft",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Otpap\\Reference\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "php tests/php/ReferenceTest.php"
+  }
+}

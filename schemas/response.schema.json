@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://otpap.example/schemas/response.schema.json",
+  "$comment": "OTPAP validation response schema used by the reference implementation and CI checks.",
+  "title": "OTPAP Validation Response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["valid", "code", "message"],
+  "properties": {
+    "valid": {
+      "type": "boolean"
+    },
+    "code": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "consumed": {
+      "type": "boolean"
+    },
+    "tokenId": {
+      "type": "string"
+    }
+  }
+}

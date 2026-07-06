@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OTPAP protocol flow -->
+<mxfile host="app.diagrams.net" modified="2026-07-06T00:00:00.000Z" agent="Codex" version="24.7.7">
+  <diagram id="flow" name="Flow">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="User Login" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Authenticated Session" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="160" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="HTML Page Generation" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="160" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="OTPAP Generation" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="630" y="160" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="Client API Request" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="160" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="OTPAP Validation" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="160" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="Business API Execution" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="160" width="180" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,34 @@
+{
+  "$comment": "Valid OTPAP test vector.",
+  "secret": "otpap-test-secret",
+  "expected": {
+    "result": "valid",
+    "code": "OTPAP-0000"
+  },
+  "request": {
+    "token": {
+      "ProtocolVersion": "2.0",
+      "ApplicationId": "warehouse",
+      "SessionId": "sess_123",
+      "UserId": "user_42",
+      "PageId": "page_orders",
+      "ApiId": "orders.create",
+      "HttpMethod": "POST",
+      "Nonce": "b4f2c0c1f2b544f6",
+      "SequenceNumber": 18,
+      "Timestamp": 1740000000,
+      "Expiration": 1740000060,
+      "BodyHash": "fbf69e08238b6bbfebe4b76e335396b8ece847ef38902950e87da22e58944064",
+      "Signature": "f96fb88314f63fdbc8eb15e6f9b0d5f3dd698bb64ed409be36438330e9724753"
+    },
+    "body": "{\"orderId\":123,\"amount\":45.50}",
+    "context": {
+      "applicationId": "warehouse",
+      "sessionId": "sess_123",
+      "userId": "user_42",
+      "pageId": "page_orders",
+      "apiId": "orders.create",
+      "httpMethod": "POST"
+    }
+  }
+}

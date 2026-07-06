@@ -1,0 +1,33 @@
+{
+  "$comment": "Expired OTPAP test vector.",
+  "expected": {
+    "result": "invalid",
+    "code": "OTPAP-1004"
+  },
+  "request": {
+    "token": {
+      "ProtocolVersion": "2.0",
+      "ApplicationId": "warehouse",
+      "SessionId": "sess_123",
+      "UserId": "user_42",
+      "PageId": "page_orders",
+      "ApiId": "orders.create",
+      "HttpMethod": "POST",
+      "Nonce": "b4f2c0c1f2b544f6",
+      "SequenceNumber": 19,
+      "Timestamp": 1700000000,
+      "Expiration": 1700000060,
+      "BodyHash": "8f3b1a3f7e8b5f3b3b5b7f1a9c6d5e4f8a1b2c3d4e5f60718293a4b5c6d7e8f9",
+      "Signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    "body": "{\"orderId\":123,\"amount\":45.50}",
+    "context": {
+      "applicationId": "warehouse",
+      "sessionId": "sess_123",
+      "userId": "user_42",
+      "pageId": "page_orders",
+      "apiId": "orders.create",
+      "httpMethod": "POST"
+    }
+  }
+}

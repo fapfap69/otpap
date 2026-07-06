@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://otpap.example/schemas/token.schema.json",
+  "$comment": "OTPAP v2 token schema. The Signature is verified separately after canonicalization.",
+  "title": "OTPAP Token",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ProtocolVersion",
+    "ApplicationId",
+    "SessionId",
+    "UserId",
+    "PageId",
+    "ApiId",
+    "HttpMethod",
+    "Nonce",
+    "SequenceNumber",
+    "Timestamp",
+    "Expiration",
+    "BodyHash",
+    "Signature"
+  ],
+  "properties": {
+    "ProtocolVersion": {
+      "type": "string",
+      "const": "2.0",
+      "description": "Protocol version identifier."
+    },
+    "ApplicationId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "SessionId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "UserId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "PageId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "ApiId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "HttpMethod": {
+      "type": "string",
+      "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+    },
+    "Nonce": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{16,128}$"
+    },
+    "SequenceNumber": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "Timestamp": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "Expiration": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "BodyHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "Signature": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    }
+  }
+}

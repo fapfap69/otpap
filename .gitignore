@@ -1,0 +1,30 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# PHP
+/vendor/
+composer.lock
+*.log
+
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+
+# Node
+node_modules/
+
+# Build artifacts
+/dist/
+/build/
+
+# Local secrets
+.env
+.env.*

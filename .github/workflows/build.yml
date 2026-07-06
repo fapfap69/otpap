@@ -1,0 +1,66 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-json-schemas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validation dependencies
+        run: python -m pip install --upgrade pip jsonschema
+      - name: Validate OTPAP test vectors
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+
+          root = Path(".")
+          token_schema = json.loads((root / "schemas/token.schema.json").read_text())
+          request_schema = json.loads((root / "schemas/request.schema.json").read_text())
+          response_schema = json.loads((root / "schemas/response.schema.json").read_text())
+
+          validator_map = {
+              "token": Draft202012Validator(token_schema),
+              "request": Draft202012Validator(request_schema),
+              "response": Draft202012Validator(response_schema),
+          }
+
+          for path in sorted((root / "tests").glob("*.json")):
+              data = json.loads(path.read_text())
+              request = data.get("request")
+              if request is not None:
+                  validator_map["request"].validate(request)
+                  validator_map["token"].validate(request["token"])
+              expected = data.get("expected", {})
+              response = {
+                  "valid": expected.get("result") == "valid",
+                  "code": expected.get("code", ""),
+                  "message": data.get("$comment", "OTPAP test vector"),
+                  "consumed": expected.get("result") == "valid",
+              }
+              validator_map["response"].validate(response)
+          PY
+
+  php-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: json
+      - name: Syntax check
+        run: find src tests/php -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Run reference tests
+        run: php tests/php/ReferenceTest.php
