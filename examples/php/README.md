@@ -1,6 +1,15 @@
-# PHP Example
+# PHP Hello World Example
 
-This example shows token generation, API invocation, validation, and replay detection with the PHP reference library.
+This is the functional OTPAP reference example for PHP.
+
+## Files
+
+- `../../src/` contains the protocol engine.
+- `reference.php` is shown inline below as the integration pattern.
+
+## Run
+
+Use the reference classes from `src/` exactly as shown in the snippet.
 
 ```php
 <?php
@@ -14,43 +23,30 @@ use Otpap\Reference\OTPAPValidator;
 use Otpap\Reference\RequestContext;
 use Otpap\Reference\SessionManager;
 
-// Server setup.
 $crypto = new Crypto();
 $sessions = new SessionManager();
 $replay = new InMemoryReplayStore();
-$generator = new OTPAPGenerator($crypto, $sessions);
-$validator = new OTPAPValidator($crypto, $sessions, $replay);
-$engine = new OTPAPEngine($generator, $validator);
-$secret = 'replace-with-a-strong-secret';
-
-// Login has already happened, so create and bind the session.
-$session = $sessions->createSession('warehouse', 'user_42', 3600);
-$sessions->bindPage($session->getSessionId(), 'page_orders');
-
-// Build the protected request context.
-$request = new RequestContext(
-    'warehouse',
-    $session->getSessionId(),
-    'user_42',
-    'page_orders',
-    'orders.create',
-    'POST',
-    '{"orderId":123,"amount":45.50}'
+$engine = new OTPAPEngine(
+    new OTPAPGenerator($crypto, $sessions),
+    new OTPAPValidator($crypto, $sessions, $replay)
 );
 
-// Generate and attach the OTPAP token.
+$session = $sessions->createSession('hello-world-app', 'user_hello', 3600);
+$sessions->bindPage($session->getSessionId(), 'page_hello');
+
+$request = new RequestContext(
+    'hello-world-app',
+    $session->getSessionId(),
+    'user_hello',
+    'page_hello',
+    'hello.world',
+    'POST',
+    '{"message":"Hello World"}'
+);
+
+$secret = 'php-hello-world-secret';
 $token = $engine->generateToken($request, $secret, 60);
-
-// Validate before executing business logic.
 $result = $engine->validateToken($token, $request, $secret, time());
-if (!$result->isValid()) {
-    echo $result->getCode();
-    exit(1);
-}
 
-// Replay detection: this second validation is rejected.
-$replayResult = $engine->validateToken($token, $request, $secret, time());
-if (!$replayResult->isValid()) {
-    echo $replayResult->getCode();
-}
+echo json_encode($result->toArray(), JSON_PRETTY_PRINT), PHP_EOL;
 ```

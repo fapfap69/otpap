@@ -1,23 +1,24 @@
-# Python FastAPI Example
+# Python Hello World Example
 
-```python
-from fastapi import FastAPI, Header, HTTPException, Request
+This example uses FastAPI and a small OTPAP helper module.
 
-app = FastAPI()
-replay_store = set()
+## Files
 
-@app.post("/api/orders/create")
-async def create_order(request: Request, x_otpap_token: str = Header(...)):
-    token = request.app.state.parser(x_otpap_token)  # Replace with your OTPAP parser.
-    token_id = f"{token['ApplicationId']}:{token['SessionId']}:{token['PageId']}:{token['ApiId']}:{token['HttpMethod']}:{token['Nonce']}:{token['SequenceNumber']}"
+- `requirements.txt`
+- `main.py`
+- `otpap.py`
 
-    # Replay detection is mandatory.
-    if token_id in replay_store:
-        raise HTTPException(status_code=409, detail={"valid": False, "code": "OTPAP-1010"})
+## Run
 
-    body = await request.body()
-    # Verify body hash, signature, page binding, API binding, and method binding here.
-    replay_store.add(token_id)
-
-    return {"valid": True, "code": "OTPAP-0000", "consumed": True}
+```bash
+cd examples/python
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload
 ```
+
+## Endpoints
+
+- `GET /page` returns a Hello World page payload and a token.
+- `POST /api/hello` validates the token and returns `Hello World`.

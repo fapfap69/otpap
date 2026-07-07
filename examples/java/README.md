@@ -1,23 +1,22 @@
-# Java Spring Boot Example
+# Java Hello World Example
 
-```java
-// OTPAP validation should run in a servlet filter or controller advice layer.
-@RestController
-public class OrdersController {
-    private final Set<String> replayStore = ConcurrentHashMap.newKeySet();
+This example uses Spring Boot to expose a Hello World API protected by OTPAP.
 
-    @PostMapping("/api/orders/create")
-    public ResponseEntity<Map<String, Object>> createOrder(
-            @RequestHeader("X-OTPAP-Token") String tokenJson,
-            @RequestBody String body) {
+## Files
 
-        // Parse token JSON, verify signature, body hash, session, page, and API binding.
-        String tokenId = "derived-token-id";
-        if (!replayStore.add(tokenId)) {
-            return ResponseEntity.status(409).body(Map.of("valid", false, "code", "OTPAP-1010"));
-        }
+- `pom.xml`
+- `src/main/java/org/otpap/example/HelloWorldApplication.java`
+- `src/main/java/org/otpap/example/OtpapCrypto.java`
+- `src/main/java/org/otpap/example/OtpapValidator.java`
 
-        return ResponseEntity.ok(Map.of("valid", true, "code", "OTPAP-0000", "executed", true));
-    }
-}
+## Run
+
+```bash
+cd examples/java
+mvn spring-boot:run
 ```
+
+## Endpoints
+
+- `GET /page` returns a Hello World page payload and a token.
+- `POST /api/hello` validates the token and returns `Hello World`.

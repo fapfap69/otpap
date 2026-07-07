@@ -1,0 +1,13 @@
+{
+  "name": "otpap-nodejs-hello-world",
+  "version": "2.0.0-draft",
+  "private": true,
+  "description": "OTPAP v2 Hello World example for Node.js and Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

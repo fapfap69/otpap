@@ -1,40 +1,21 @@
-# Go Example
+# Go Hello World Example
 
-```go
-package main
+This example uses the Go standard library only.
 
-import (
-	"encoding/json"
-	"net/http"
-)
+## Files
 
-var replayStore = map[string]bool{}
+- `go.mod`
+- `main.go`
+- `otpap.go`
 
-func validateOTPAP(next http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		tokenJSON := r.Header.Get("X-OTPAP-Token")
-		var token map[string]any
-		_ = json.Unmarshal([]byte(tokenJSON), &token)
+## Run
 
-		// Replay detection and context validation should happen here.
-		tokenID := "derived-token-id"
-		if replayStore[tokenID] {
-			w.WriteHeader(http.StatusConflict)
-			_ = json.NewEncoder(w).Encode(map[string]any{"valid": false, "code": "OTPAP-1010"})
-			return
-		}
-
-		replayStore[tokenID] = true
-		next(w, r)
-	}
-}
-
-func createOrder(w http.ResponseWriter, r *http.Request) {
-	_ = json.NewEncoder(w).Encode(map[string]any{"valid": true, "code": "OTPAP-0000"})
-}
-
-func main() {
-	http.HandleFunc("/api/orders/create", validateOTPAP(createOrder))
-	_ = http.ListenAndServe(":8080", nil)
-}
+```bash
+cd examples/go
+go run .
 ```
+
+## Endpoints
+
+- `GET /page` returns a Hello World page payload and a token.
+- `POST /api/hello` validates the token and returns `Hello World`.

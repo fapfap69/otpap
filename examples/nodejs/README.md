@@ -1,31 +1,24 @@
-# NodeJS Express Example
+# Node.js Hello World Example
 
-```javascript
-const express = require('express');
-const app = express();
-app.use(express.json());
+This example is a small Express API protected by OTPAP.
 
-// A production app would use a shared OTPAP library or service module.
-const replayStore = new Map();
+## Files
 
-function validateOtpap(req, res, next) {
-  const token = JSON.parse(req.header('X-OTPAP-Token'));
-  const tokenId = `${token.ApplicationId}:${token.SessionId}:${token.PageId}:${token.ApiId}:${token.HttpMethod}:${token.Nonce}:${token.SequenceNumber}`;
+- `package.json`
+- `server.js`
+- `otpap.js`
 
-  // Replay detection.
-  if (replayStore.has(tokenId)) {
-    return res.status(409).json({ valid: false, code: 'OTPAP-1010' });
-  }
+## Run
 
-  // Validate request context and body hash here.
-  replayStore.set(tokenId, true);
-  next();
-}
-
-app.post('/api/orders/create', validateOtpap, (req, res) => {
-  // Business execution happens only after OTPAP validation.
-  res.json({ valid: true, code: 'OTPAP-0000', created: true });
-});
-
-app.listen(3000);
+```bash
+cd examples/nodejs
+npm install
+npm start
 ```
+
+## Endpoints
+
+- `GET /page` returns a Hello World page payload and a token.
+- `POST /api/hello` validates the token and returns `Hello World`.
+
+The request body must match the body used when the token was generated.
